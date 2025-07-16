@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Management Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="styles.css">
+   
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+         
+            <div class="col-md-2 sidebar">
+                <div class="text-center mb-4">
+                    <h3>LogiTrack</h3>
+                    <p class="text-muted">Fleet Management</p>
+                </div>
+                
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-truck"></i> Vehicles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-map-marked-alt"></i> Routes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-boxes"></i> Shipments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+   
+            <div class="col-md-10 main-content">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Fleet Dashboard</h2>
+                    <div class="d-flex">
+                        <button class="btn btn-primary me-2">
+                            <i class="fas fa-plus me-2"></i> New Shipment
+                        </button>
+                        <button class="btn btn-outline-secondary">
+                            <i class="fas fa-filter me-2"></i> Filters
+                        </button>
+                    </div>
+                </div>
+                
+               
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-card">
+                            <h5 class="card-title">Active Vehicles</h5>
+                            <h2>18</h2>
+                            <div class="d-flex align-items-center">
+                                <span class="text-success me-2">+2</span>
+                                <small class="text-muted">from last week</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card">
+                            <h5 class="card-title">Shipments Today</h5>
+                            <h2>24</h2>
+                            <div class="progress progress-thin mt-2">
+                                <div class="progress-bar bg-success" style="width: 75%"></div>
+                            </div>
+                            <small class="text-muted">15 completed</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card">
+                            <h5 class="card-title">On-Time Rate</h5>
+                            <h2>92%</h2>
+                            <div class="progress progress-thin mt-2">
+                                <div class="progress-bar bg-info" style="width: 92%"></div>
+                            </div>
+                            <small class="text-muted">+3% from last month</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card">
+                            <h5 class="card-title">Fuel Efficiency</h5>
+                            <h2>8.2</h2>
+                            <small class="text-muted">km/l average</small>
+                            <div class="d-flex align-items-center mt-2">
+                                <i class="fas fa-arrow-up text-success me-2"></i>
+                                <small class="text-muted">Improved by 5%</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+               
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title">Live Fleet Tracking</h5>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary me-2">
+                                        <i class="fas fa-layer-group"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h5 class="card-title">Vehicle Status</h5>
+                            <div class="vehicle-status">
+                                <div class="status-indicator status-moving"></div>
+                                <div class="flex-grow-1">Moving (12)</div>
+                                <div class="badge bg-primary">12</div>
+                            </div>
+                            <div class="vehicle-status">
+                                <div class="status-indicator status-idle"></div>
+                                <div class="flex-grow-1">Idle (4)</div>
+                                <div class="badge bg-warning text-dark">4</div>
+                            </div>
+                            <div class="vehicle-status">
+                                <div class="status-indicator status-maintenance"></div>
+                                <div class="flex-grow-1">Maintenance (2)</div>
+                                <div class="badge bg-danger">2</div>
+                            </div>
+                            
+                            <hr>
+                            
+                            <h6 class="mt-3">Recent Alerts</h6>
+                            <div class="alert alert-warning p-2 mb-2">
+                                <small><i class="fas fa-exclamation-triangle me-2"></i> Vehicle #L-2456 needs service</small>
+                            </div>
+                            <div class="alert alert-info p-2 mb-2">
+                                <small><i class="fas fa-info-circle me-2"></i> Traffic delay on N1 highway</small>
+                            </div>
+                            <div class="alert alert-success p-2">
+                                <small><i class="fas fa-check-circle me-2"></i> Shipment #4582 delivered</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title">Active Shipments</h5>
+                                <button class="btn btn-sm btn-outline-primary">View All</button>
+                            </div>
+                            
+                            <div class="shipment-card">
+                                <div class="d-flex justify-content-between">
+                                    <strong>#SH-4582</strong>
+                                    <span class="badge bg-success">In Transit</span>
+                                </div>
+                                <small class="text-muted">Johannesburg → Durban</small>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <small>ETA: Today 15:30</small>
+                                    <small>Vehicle: L-2456</small>
+                                </div>
+                            </div>
+                            
+                            <div class="shipment-card">
+                                <div class="d-flex justify-content-between">
+                                    <strong>#SH-4581</strong>
+                                    <span class="badge bg-warning text-dark">Loading</span>
+                                </div>
+                                <small class="text-muted">Cape Town → Pretoria</small>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <small>ETA: Tomorrow 08:45</small>
+                                    <small>Vehicle: L-2458</small>
+                                </div>
+                            </div>
+                            
+                            <div class="shipment-card">
+                                <div class="d-flex justify-content-between">
+                                    <strong>#SH-4580</strong>
+                                    <span class="badge bg-secondary">Scheduled</span>
+                                </div>
+                                <small class="text-muted">Port Elizabeth → Bloemfontein</small>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <small>ETA: Wed 12:00</small>
+                                    <small>Vehicle: L-2460</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title">Route Optimization</h5>
+                                <button class="btn btn-sm btn-outline-primary">Run Optimizer</button>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Current Route</label>
+                                <div class="p-2 bg-light rounded">
+                                    <small>
+                                        <i class="fas fa-map-marker-alt text-danger"></i> Warehouse 1 → 
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Customer A → 
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Customer C → 
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Customer B
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Optimized Route</label>
+                                <div class="p-2 bg-light rounded">
+                                    <small>
+                                        <i class="fas fa-map-marker-alt text-danger"></i> Warehouse 1 → 
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Customer B → 
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Customer A → 
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Customer C
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="p-2 bg-white rounded border">
+                                        <small class="text-muted">Current Distance</small>
+                                        <h6 class="mb-0">142 km</h6>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-2 bg-white rounded border">
+                                        <small class="text-muted">Optimized Distance</small>
+                                        <h6 class="mb-0 text-success">118 km</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <button class="btn btn-success w-100">
+                                    <i class="fas fa-check-circle me-2"></i> Apply Optimized Route
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+     <script src="script.js"></script>
+       
+ 
+</body>
+</html>
